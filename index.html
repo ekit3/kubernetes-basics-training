@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Kubernetes Basics</title>
+
+    <meta name="description" content="Kubernetes Basics">
+    <meta name="author" content="Julien WITTOUCK <julien@codeka.io>">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="reveal/dist/reveal.css">
+    <link rel="stylesheet" href="reveal/dist/theme/white.css" id="theme">
+
+    <link rel="stylesheet" href="css/ekit3.css"/>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <div class="slides">
+
+        <section data-markdown>
+            <textarea data-template>
+                # ☸️ Kubernetes
+                orchestrator concepts
+                ---
+                ## What is a container?
+                It's all about isolation
+
+                * process
+                * cpu & memory
+                * users
+                * network
+                * storage (filesystem)
+                * devices
+
+                ---
+                ## What is a container?
+                Isolation enables cohabitation
+                ![](images//01-isolation.png)
+
+                ---
+                ## Docker - Write Once, Run anywhere ☕
+                ![](images//02-write-once-run-anywhere.png)
+
+                ---
+                ## How to run containers in a cluster environment ?
+                ![](images//03-hosts.png)
+
+                ---
+                ## Problems Docker doesn't solve
+
+                * how to manage multiple updates, tons of containers, on multiple hosts
+                * how to choose which server will host which container
+                * what if a host is down
+                * how to scale (up/down)
+                * how to manage container lifecycle (restarts)
+
+                ---
+                ## container orchestration
+
+                ![](images//04-orchestration.png)
+
+                ---
+                ## What an orchestrator does
+
+                * Manages containers lifecycle
+                * Ensures high availability
+                * Load balances traffic
+                * Provides service discovery
+                * Provides network as an overlay between hosts
+                * Provides grouping of resources
+                * Stores configuration
+                * Stores secrets
+                * Scales up/down containers
+                * Provides storage (persistent & distributed)
+                * Implements Role-based access control
+
+                ---
+                ## Introducing Kubernetes
+                * Open-Source project
+                * Initiated by Google in 2014
+                * Based on 15 years of experience by Google (Borg project)
+                * Cloud Native Computing Foundation (CNCF graduated project)
+                * Two nicknames:
+                  * kube
+                  * k8s
+
+                https://github.com/kubernetes
+                https://kubernetes.io
+
+                ![](images//kubernetes-pronounciation.png)
+                ---
+                ## Kubernetes architecture
+                ![](images//06-kubernetes-architecture.png)
+
+                ---
+                # Kubernetes main concepts
+
+                ---
+                ## Pod
+
+                > Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
+
+                ![](images//07-pod.png)
+
+                ---
+                ## Pod
+
+                * a Pod is a group of one or more containers
+                * containers in a Pod share storage and network resources
+                * they can communication through loopback (localhost)
+                * a Pod has an IP address in the cluster
+                * resources of a Pod are co-located
+                * generally, Pods contains only one container
+
+                ---
+                ## workloads : deployments & replicasets
+
+                > Deployments manages a replicated application on your cluster
+                >
+                > ReplicaSet ensures that a specified number of Pod replicas are running at one time
+
+                ![](images//08-deployment.png)
+
+                ---
+                ## workloads : deployments & replicasets
+
+                * a Deployment helps to define & update a ReplicaSet
+                * a ReplicaSet holds the definition of a Pod, which should be replicated to one or multiple instances (replicas)
+                * provides guarantee of the specified number of identical running Pods
+                * Pods are scheduled by the controllers on any available node
+                * the controller ensures that the correct number of Pods are always running
+                * Deployment enables the updates of Pods using rolling updates
+
+                ---
+                ## workloads : daemonset
+
+                > DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+
+                ![](images//09-daemonset.png)
+
+                ---
+                ## workloads : daemonset
+
+                typical use cases:
+                * logs management
+                * monitoring
+                * cluster storage
+
+                ---
+                ## workloads : jobs/cronjobs
+
+                > Job creates one or more Pods and ensures that a specified number of them successfully terminate.
+                > Cronjobs creates Jobs on a repeating schedule.
+
+                ![](images//10-cronjob.png)
+
+                ---
+                ## workloads : jobs/cronjobs
+
+                * a Job runs a Pod until completion
+                * if the Pod is failed, killed or deleted, the Job will be restarted
+                * use case: one-time running batch
+                * a Cronjob uses crontab syntax to define schedules
+                * use case: batches !
+
+                ---
+                ## networking: services
+
+                > A Service is an abstract way to expose an application running on a set of Pods as a network service.
+
+                ![](images//11-services.png)
+
+                ---
+                ## networking: services
+
+                * a Service is an internal IP and single DNS name for a set of Pods
+                * It provides load-balancing between Pods
+                * The set of Pods is targeted using selectors (a set of labels)
+                * This mecanism replaces service-discovery & VIPs
+                * A Service listens on a port, and redirects traffic to a port in the Pods
+                * A Service is visible inside the cluster
+
+                ---
+                ## networking: ingress
+
+                > Ingress exposes HTTP and HTTPS routes from outside the cluster to Services within the cluster
+
+                ![](images//12-ingress.png)
+
+                ---
+                ## networking: ingress
+
+                * Ingress gives Services externally-reachable URLs
+                * It can provide SSL/TLS termination
+                * Name-based virtual hosting
+                * Runs on Layer 7 (HTTP)
+                * Uses the "Host" HTTP Header to route requests to the right Service
+                * An Ingress Controllers manages Ingress, such a Traefik or Nginx
+
+            </textarea>
+        </section>
+
+    </div>
+
+</div>
+
+<script src="reveal/dist/reveal.js"></script>
+<script src="reveal/plugin/markdown/markdown.js"></script>
+<link rel="stylesheet" href="reveal/plugin/highlight/zenburn.css">
+<script src="reveal/plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight],
+        markdown: {
+            smartypants: true
+        }
+    });
+</script>
+
+<aside class="ekit3_aside_logo"></aside>
+
+</body>
+</html>
