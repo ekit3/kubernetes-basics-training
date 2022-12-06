@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: basic-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: pizza
+  template:
+    metadata:
+      labels:
+        app: pizza
+    spec:
+      containers:
+        - name: webserver
+          image: nginx

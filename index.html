@@ -107,15 +107,26 @@
 
                 ---
                 # Kubernetes main concepts
-
-                ---
-                ## Pod
-
-                > Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.
-
-                ![](images//07-pod.png)
-
-                ---
+            </textarea>
+        </section>
+        <section>
+            <h2>Pod</h2>
+            <p>Pods are the smallest deployable units of computing that you can create and manage in Kubernetes.</p>
+            <div style="width: 90%">
+            <img src="images/07-pod.png" style="width: 50%; float: right;"/>
+            <pre style="width: 50%; float: left;"><code data-line-numbers data-trim>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: basic-pod
+spec:
+  containers:
+  - name: webserver
+    image: nginx
+                    </pre></code></div>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
                 ## Pod
 
                 * a Pod is a group of one or more containers
@@ -124,34 +135,76 @@
                 * a Pod has an IP address in the cluster
                 * resources of a Pod are co-located
                 * generally, Pods contains only one container
-
-                ---
-                ## workloads : deployments & replicasets
-
-                > Deployments manages a replicated application on your cluster
-                >
-                > ReplicaSet ensures that a specified number of Pod replicas are running at one time
-
-                ![](images//08-deployment.png)
-
-                ---
-                ## workloads : deployments & replicasets
+            </textarea>
+        </section>
+        <section>
+            <h2>deployments & replicasets</h2>
+            <p>
+                Deployments manages a replicated application on your cluster.
+                ReplicaSet ensures that a specified number of Pod replicas are running at one time.
+            </p>
+            <div style="width: 90%">
+            <img src="images/08-deployment.png" style="width: 50%; float: right;"/>
+            <pre style="width: 50%; float: left;"><code data-line-numbers data-trim>
+                apiVersion: apps/v1
+                kind: Deployment
+                metadata:
+                  name: basic-deployment
+                spec:
+                  replicas: 2
+                  selector:
+                    matchLabels:
+                      app: burger
+                  template:
+                    metadata:
+                      labels:
+                        app: burger
+                    spec:
+                      containers:
+                        - name: webserver
+                          image: nginx
+                    </pre></code></div>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
+                ## deployments & replicasets
 
                 * a Deployment helps to define & update a ReplicaSet
                 * a ReplicaSet holds the definition of a Pod, which should be replicated to one or multiple instances (replicas)
                 * provides guarantee of the specified number of identical running Pods
                 * Pods are scheduled by the controllers on any available node
                 * the controller ensures that the correct number of Pods are always running
-                * Deployment enables the updates of Pods using rolling updates
-
-                ---
-                ## workloads : daemonset
-
-                > DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
-
-                ![](images//09-daemonset.png)
-
-                ---
+                * Deployment enables the updates of Pods using rolling updates            
+            </textarea>
+        </section>
+        <section>
+            <h2>daemonset</h2>
+            <p>
+                DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+            </p>
+            <div style="width: 90%">
+            <img src="images/09-daemonset.png" style="width: 50%; float: right;"/>
+            <pre style="width: 50%; float: left;"><code data-line-numbers data-trim>
+                apiVersion: apps/v1
+                kind: DaemonSet
+                metadata:
+                  name: basic-daemonset
+                spec:
+                  selector:
+                    matchLabels:
+                      app: pizza
+                  template:
+                    metadata:
+                      labels:
+                        app: pizza
+                    spec:
+                      containers:
+                        - name: webserver
+                          image: nginx
+                    </pre></code></div>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
                 ## workloads : daemonset
 
                 typical use cases:
@@ -159,15 +212,33 @@
                 * monitoring
                 * cluster storage
 
-                ---
-                ## workloads : jobs/cronjobs
-
-                > Job creates one or more Pods and ensures that a specified number of them successfully terminate.
-                > Cronjobs creates Jobs on a repeating schedule.
-
-                ![](images//10-cronjob.png)
-
-                ---
+            </textarea>
+        </section>
+        <section>
+            <h2>jobs/cronjobs</h2>
+            <p>
+                Job creates one or more Pods and ensures that a specified number of them successfully terminate.
+                Cronjobs creates Jobs on a repeating schedule.
+            </p>
+            <div style="width: 90%">
+            <img src="images/10-cronjob.png" style="width: 50%; float: right;"/>
+            <pre style="width: 50%; float: left;"><code data-line-numbers data-trim>
+                apiVersion: batch/v1
+                kind: Job
+                metadata:
+                  name: bretzel
+                spec:
+                  template:
+                    spec:
+                      containers:
+                        - name: date
+                          image: alpine
+                          command: ["sh", "-c", "date"]
+                      restartPolicy: Never
+                    </pre></code></div>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
                 ## workloads : jobs/cronjobs
 
                 * a Job runs a Pod until completion
@@ -175,15 +246,31 @@
                 * use case: one-time running batch
                 * a Cronjob uses crontab syntax to define schedules
                 * use case: batches !
-
-                ---
-                ## networking: services
-
-                > A Service is an abstract way to expose an application running on a set of Pods as a network service.
-
-                ![](images//11-services.png)
-
-                ---
+            </textarea>
+        </section>
+        <section>
+            <h2>networking: services</h2>
+            <p>
+                A Service is an abstract way to expose an application running on a set of Pods as a network service.
+            </p>
+            <div style="width: 90%">
+            <img src="images/11-services.png" style="width: 50%; float: right;"/>
+            <pre style="width: 50%; float: left;"><code data-line-numbers data-trim>
+                apiVersion: v1
+                kind: Service
+                metadata:
+                  name: burger-service
+                spec:
+                  selector:
+                    app: burger
+                  ports:
+                  - protocol: TCP
+                    port: 80
+                    targetPort: 8080
+                    </pre></code></div>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
                 ## networking: services
 
                 * a Service is an internal IP and single DNS name for a set of Pods
@@ -192,15 +279,38 @@
                 * This mecanism replaces service-discovery & VIPs
                 * A Service listens on a port, and redirects traffic to a port in the Pods
                 * A Service is visible inside the cluster
-
-                ---
-                ## networking: ingress
-
-                > Ingress exposes HTTP and HTTPS routes from outside the cluster to Services within the cluster
-
-                ![](images//12-ingress.png)
-
-                ---
+            </textarea>
+        </section>
+        <section>
+            <h2>networking: ingress</h2>
+            <p>
+                Ingress exposes HTTP and HTTPS routes from outside the cluster to Services within the cluster.
+            </p>
+            <div style="width: 90%">
+            <img src="images/12-ingress.png" style="width: 50%; float: right;"/>
+            <pre style="width: 50%; float: left;"><code data-line-numbers data-trim>
+                apiVersion: networking.k8s.io/v1
+                kind: Ingress
+                metadata:
+                  name: ingress-burger
+                  annotations:
+                    kubernetes.io/ingress.class: traefik
+                spec:
+                  rules:
+                  - host: burger.com.172.16.134.57.nip.io
+                    http:
+                      paths:
+                      - path: /
+                        pathType: Prefix
+                        backend:
+                          service:
+                            name: burger-service
+                            port: 
+                              number: 80
+                    </pre></code></div>
+        </section>
+        <section data-markdown>
+            <textarea data-template>
                 ## networking: ingress
 
                 * Ingress gives Services externally-reachable URLs

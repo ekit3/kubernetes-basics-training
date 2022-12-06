@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bretzel
+spec:
+  template:
+    spec:
+      containers:
+        - name: date
+          image: alpine
+          command: ["sh", "-c", "date"]
+      restartPolicy: Never
