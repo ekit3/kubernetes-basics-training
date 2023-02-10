@@ -319,8 +319,197 @@ spec:
                 * Runs on Layer 7 (HTTP)
                 * Uses the "Host" HTTP Header to route requests to the right Service
                 * An Ingress Controllers manages Ingress, such a Traefik or Nginx
-
-                ---
+            </textarea>
+          </section>
+          <section>
+            <section>
+              <h1>Quiz</h1>
+            </section>
+            <section data-quiz>
+              # C'est quoi Kubernetes ?
+              - [x] Un mot grec qui signifie "Sailing Master"
+              - [ ] Un truc incompréhensible
+              - [ ] Le nouveau meilleur ami de Laurent
+              - [x] Un orchestrateur de containers
+            </section>
+            <section data-quiz>
+              # Quel composant est le "cerveau" de Kubernetes ?
+              - [x] Le control-plane
+              - [ ] Le data-plane
+              - [ ] Les nodes
+              - [ ] La réponse "D"
+            </section>
+            <section data-quiz>
+              # Qu'est-ce qu'un Pod ?
+              - [x] La plus petite unité de déploiement de Kubernetes
+              - [ ] Un serveur de calcul
+              - [ ] Un container
+              - [x] Un vaisseau de course de Star Wars
+            </section>
+            <section data-quiz>
+              # Quels sont les patterns de Pods ?
+              - [x] One-Container per Pod
+              - [x] Sidecar
+              - [ ] Init-Container
+              - [ ] Singleton
+            </section>
+            <section data-quiz>
+              # Quelles sont les propriétés d'un Pod qui sont vraies ?
+              - [ ] Chaque container a une adresse IP
+              - [x] Un Pod a une adresse IP
+              - [x] Les containers d'un Pod peuvent communiquer via "loopback/localhost"
+              - [ ] Les Pods d'un container peuvent se partager un volume
+            </section>
+            <section data-quiz>
+              # Quelle commande permet de créer un Pod ?
+              - [x] `kubectl create -f mon-joli-pod.yaml`
+              - [ ] `kubectl get pod --create`
+              - [ ] `docker image build --pod`
+              - [ ] "Ok Google, crée un Pod"
+            </section>
+            <section data-quiz>
+              # Qu'est ce qu'un Deployment ?
+              - [x] Un objet qui manage des Pods
+              - [ ] Un ensemble de containers
+              - [x] La meilleure façon de déployer des applications
+              - [ ] "Ok Google, qu'est ce qu'un deployment ?"
+            </section>
+            <section data-quiz>
+              # Comment je peux récupérer les details d'un Pod nommé "luke" ?
+              - [ ] `kubectl inspect pod luke`
+              - [x] `kubectl describe pod luke`
+              - [ ] `kubectl describe deployment luke`
+              - [ ] "Je suis ton père"
+            </section>
+            <section data-quiz>
+              # J'ai un deployment qui instancie 2 replicas de pods "nginx", que se passe t-il si un des pods est supprimé ?
+              - [ ] Rien du tout
+              - [x] Un pod "nginx" est re-créé
+              - [ ] Le deployment tombe en erreur
+              - [x] Le deployment indique 1/2 "Ready"  
+            </section>
+            <section data-quiz>
+              # Quelle commande permet d'exécuter des commandes dans un pod ?
+              - [x] `kubectl exec -it <Pod> -- /bin/bash`
+              - [ ] `kubectl get pods <Pod> --exec`
+              - [ ] `kubectl logs <Pod>`
+              - [ ] `kubectl exec <Pod> /bin/bash`
+              </section>
+              <section data-quiz>
+              # Quelle probe permet de détecter qu'un Pod est prêt à recevoir des requêtes ?
+              - [x] readinessProbe
+              - [ ] livenessProbe
+              - [ ] startupProbe
+              - [ ] droidProbe
+            </section>
+            <section data-quiz>
+              # Quelle probe permet de détecter qu'un Pod est en train de démarrer ?
+              - [ ] readinessProbe
+              - [ ] livenessProbe
+              - [x] startupProbe
+              - [ ] droidProbe
+            </section>
+            <section data-quiz>
+              # Comment peut-on implémenter une probe ?
+              - [x] Une commande Linux qui retourne un code de sortie 0
+              - [x] Une requête HTTP GET qui retourne un code entre 200 et 399
+              - [x] Établir une connexion TCP vers un port
+              - [x] A, B, C et donc D
+            </section>
+            <section data-quiz>
+              # Quelle(s) commande permet de lister les pods ayant le label "app=star-wars" ?
+              - [ ] `kubectl get pods -o yaml`
+              - [x] `kubectl get pods -l app=star-wars`
+              - [x] `kubectl get pods --selector app=star-wars`
+              - [ ] `kubectl get services -l app=star-wars`
+              </section>
+              <section data-quiz>
+              # Quel(s) objet(s) Kubernetes permet de lancer des tâches ?
+              - [x] Job
+              - [x] Cronjob
+              - [ ] Batch
+              - [ ] Pod
+              </section>
+              <section data-quiz>
+              # Un Pod ayant: `resources.limits.cpu: 2` et `resource.requests.cpu: 1`:
+              - [ ] Pourra consommer 1 CPU max
+              - [x] Pourra consommer 2 CPU max
+              - [x] Aura 1 CPU de réservé
+              - [ ] Aura 2 CPU de réservé
+            </section>
+            <section data-quiz>
+              # Que se passe-t-il lorsqu'un Pod a atteint sa consommation limite de CPU ?
+              - [ ] Rien du tout
+              - [x] Il est "throttled", et n'est plus schedulé pendant moment
+              - [ ] Il est "OOMKilled", et est ensuite re-créé
+              - [ ] Obi Wan Kenobi
+            </section>
+            <section data-quiz>
+              # Que se passe-t-il lorsqu'un Pod a atteint sa consommation limite de RAM ?
+              - [ ] Rien du tout
+              - [ ] Il est "throttled", et n'est plus schedulé pendant moment
+              - [x] Il est "OOMKilled", et est ensuite re-créé
+              - [ ] Obi Wan Kenobi
+            </section>
+            <section data-quiz>
+              # Un volume:
+              - [x] Permet de partager des fichiers entre plusieurs containers d'un même pod
+              - [x] Permet de partager des fichiers entre plusieurs pods
+              - [x] Peut être persistant
+              - [x] A, B, C, et donc D
+            </section>
+            <section data-quiz>
+              # Un secret:
+              - [x] a une taille limite de 1 Mo
+              - [x] est encodé en base64
+              - [ ] est encrypté
+              - [ ] n'est pas visible par les développeurs
+            </section>
+            <section data-quiz>
+              # Dans un Pod, on peut utiliser un secret:
+              - [x] en variable d'environnement
+              - [x] en le montant comme un volume
+              - [ ] on ne peut pas, c'est un secret
+              - [ ] en sidecar
+            </section>
+            <section data-quiz>
+              # On peut créer une configMap:
+              - [x] à partir d'un fichier ou d'un répertoire
+              - [x] à partir d'un fichier YAML
+              - [x] avec la commande kubectl create configmap
+              - [ ] à partir d'un secret
+            </section>
+            <section data-quiz>
+              # Dans un Pod, on peut utiliser une configMap:
+              - [x] en variable d'envionnement
+              - [x] en la montant comme un volume
+              - [ ] en sidecar
+              - [ ] on ne peut pas utiliser une configmap dans un Pod, uniquement des secrets
+            </section>
+            <section data-quiz>
+              # J'ai un pod qui utilise une configMap, je modifie la configMap pour en changer des valeurs. Pour que la nouvelle valeur soit prise en compte, je dois:
+              - [x] redémarrer le Pod
+              - [x] re-créer le Pod
+              - [ ] attendre 30 secondes
+              - [ ] ne rien faire
+            </section>
+            <section data-quiz>
+              # Quelle commande permet de re-créer tous les pods d'un déploiement ?
+              - [ ] `kubectl delete pods <deployment>`
+              - [x] `kubectl rollout restart deployment <deployment>`
+              - [ ] `kubectl rollout history deployment <deployment>`
+              - [ ] `rm -rf /`
+            </section>
+            <section data-quiz>
+              # Quelle commande permet de revenir à une version précédente d'un déploiement ?
+              - [ ] `kubectl delete pods <deployment>`
+              - [x] `kubectl rollout restart deployment <deployment>`
+              - [ ] `kubectl rollout undo deployment <deployment>`
+              - [ ] `rm -rf /`
+            </section>
+          </section>
+          <section data-markdown>
+              <textarea data-template>
                 ### Thank you!
 
                 ---
@@ -338,6 +527,7 @@ spec:
 <script src="reveal/plugin/markdown/markdown.js"></script>
 <link rel="stylesheet" href="reveal/plugin/highlight/zenburn.css">
 <script src="reveal/plugin/highlight/highlight.js"></script>
+<script src="https://juwit.github.io/reveal-quiz/reveal-quiz-bundle.js"></script>
 <script>
     // More info about initialization & config:
     // - https://revealjs.com/initialization/
@@ -346,9 +536,13 @@ spec:
         hash: true,
 
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealMarkdown, RevealHighlight],
+        plugins: [RevealMarkdown, RevealHighlight, RevealQuiz],
         markdown: {
             smartypants: true
+        },
+
+        quiz: {
+          randomizeAnswers: true
         }
     });
 </script>
